@@ -1,18 +1,24 @@
 import { useState } from "react";
-import { FaGithub, FaBars, FaTimes } from "react-icons/fa";
+import { FaGithub, FaBars, FaTimes, FaMoon, FaSun } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import StarForkButton from "./StarFork";
 import "./Navbar.css";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle("dark", !isDarkMode);
+  };
+
   return (
-    <nav className="bg-gray-800 shadow-lg">
+    <nav className="bg-gray-800 shadow-lg dark:bg-gray-900">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link
           to="/"
@@ -48,6 +54,12 @@ export default function Navbar() {
             >
               Home
             </NavLink>
+            <button
+              onClick={toggleDarkMode}
+              className="text-gray-300 hover:text-purple-400 transition duration-300"
+            >
+              {isDarkMode ? <FaSun className="w-6 h-6" /> : <FaMoon className="w-6 h-6" />}
+            </button>
             <NavLink
               to="/profileGenerator"
               className={({ isActive }) =>
@@ -78,7 +90,7 @@ export default function Navbar() {
 
       {/* Mobile Links */}
       {isOpen && (
-        <div className="md:hidden bg-gray-800 px-6 pb-4">
+        <div className="md:hidden bg-gray-800 dark:bg-gray-900 px-6 pb-4">
           <div className="flex flex-col space-y-4">
             <NavLink
               to="/"
@@ -102,6 +114,12 @@ export default function Navbar() {
             >
               <FaGithub className="w-7 h-7" />
             </a>
+            <button
+              onClick={toggleDarkMode}
+              className="text-gray-300 hover:text-purple-400 transition duration-300"
+            >
+              {isDarkMode ? <FaSun className="w-6 h-6" /> : <FaMoon className="w-6 h-6" />}
+            </button>
           </div>
         </div>
       )}
